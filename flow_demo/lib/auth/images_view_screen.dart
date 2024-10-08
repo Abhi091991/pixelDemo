@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/images_view_modal.dart';
 import '../utills/app_constants.dart';
+import '../utills/common_dialogs.dart';
 
 /// To display all images UI
 class ImagesViewScreen extends StatelessWidget {
@@ -32,24 +33,27 @@ class ImagesViewScreen extends StatelessWidget {
                    ),
                    itemCount: imagesViewModal.imagesList.length,
                    itemBuilder: (context, index) {
-                     return Card(
-                       child: Stack(
-                         fit: StackFit.expand,
-                         children: [
-                           Image.network(kIsWeb?imagesViewModal.imagesList[index].largeImageUrl??"":imagesViewModal.imagesList[index].previewUrl??"",fit: BoxFit.cover,),
-                           Positioned(left: 10,bottom: 5,child: Row(
-                             children: [
-                               const Icon(Icons.thumb_up_alt),
-                               GetCommonText(title: imagesViewModal.imagesList[index].likes.toString(), size: 15, color: AppTheme.appLightThemeTextColor, fontWeight: FontWeight.w600)
-                             ],
-                           )),
-                           Positioned(right: 10,bottom: 5,child: Row(
-                             children: [
-                               const Icon(Icons.remove_red_eye),
-                               GetCommonText(title: imagesViewModal.imagesList[index].views.toString(), size: 15, color: AppTheme.appLightThemeTextColor, fontWeight: FontWeight.w600)
-                             ],
-                           ))
-                         ],
+                     return InkWell(
+                       onTap: ()async=>await AlertDialogUtility.showAlertDialog(context, kIsWeb?imagesViewModal.imagesList[index].largeImageUrl??"":imagesViewModal.imagesList[index].previewUrl??"","ok"),
+                       child: Card(
+                         child: Stack(
+                           fit: StackFit.expand,
+                           children: [
+                             Image.network(kIsWeb?imagesViewModal.imagesList[index].largeImageUrl??"":imagesViewModal.imagesList[index].previewUrl??"",fit: BoxFit.cover,),
+                             Positioned(left: 10,bottom: 5,child: Row(
+                               children: [
+                                 const Icon(Icons.thumb_up_alt),
+                                 GetCommonText(title: imagesViewModal.imagesList[index].likes.toString(), size: 15, color: AppTheme.appLightThemeTextColor, fontWeight: FontWeight.w600)
+                               ],
+                             )),
+                             Positioned(right: 10,bottom: 5,child: Row(
+                               children: [
+                                 const Icon(Icons.remove_red_eye),
+                                 GetCommonText(title: imagesViewModal.imagesList[index].views.toString(), size: 15, color: AppTheme.appLightThemeTextColor, fontWeight: FontWeight.w600)
+                               ],
+                             ))
+                           ],
+                         ),
                        ),
                      );
                    },
